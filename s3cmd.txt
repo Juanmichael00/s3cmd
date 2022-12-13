@@ -1,0 +1,64 @@
+Instalando e Configurando o S3CMD para envio de arquivos criptografados para AWS 
+
+Neste Lab iremos aprender a instalar e configurar o s3cmd para envio de arquivos já criptografando com GPG para o S3 da AWS 
+
+1° Instalação Ubuntu:
+apt-get install s3cmd   
+
+2° crie o arquivo s3.cfg: 
+s3cmd --configure
+
+Exemplo:
+
+Access Key: qw2qdw2qe2q
+Secret Key: wfdw3r3wr3wr
+Default Region [US]: us-east-1
+S3 Endpoint [s3.amazonaws.com]: s3.amazonaws.com
+DNS-style bucket+hostname:port template for accessing a bucket [%(bucket)s.s3.amazonaws.com]: bucket-name.s3.amazonaws.com
+Encryption password: 12345
+Path to GPG program [/usr/bin/gpg]: /usr/bin/gpg
+Use HTTPS protocol [Yes]:yes 
+HTTP Proxy server name: 
+...
+Test access with supplied credentials? [Y/n] y
+Please wait, attempting to list all buckets...
+Success. Your access key and secret key worked fine :-)
+
+Now verifying that encryption works...
+Success. Encryption and decryption worked fine :-)
+
+Save settings? [y/N] y
+Configuration saved to '/home/user/.s3cfg'
+
+
+3° Verifica a versão:
+s3cmd --version  
+
+4° Criar um bucket:
+s3cmd mb s3://example-bucket
+
+5° Listar buckets:
+s3cmd ls
+
+6° Enviar arquivo criptografado para o bucket: adicione a flag -e (encrypt)
+s3cmd -e put nome-arquivo.txt s3://bucket-name
+
+Ou: Apenas enviar arquivo para o bucket:
+s3cmd put testfile.txt s3://bucket-name
+
+7° Baixar objeto do bucket:
+s3cmd get s3://bucket-name/nome-arquivo.txt
+
+8° Apagar objeto do bucket:
+s3cmd rm s3://BUCKET/OBJECT
+
+9° Excluir bucket:
+s3cmd rb s3://example-bucket
+
+10° Disk usage
+s3cmd du [s3://BUCKET[/PREFIX]]
+
+11° Para ajuda:
+s3cmd --help
+
+
